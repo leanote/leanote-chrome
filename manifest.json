@@ -1,0 +1,31 @@
+{
+   "background": {
+      "page": "background.html"
+   },
+   "browser_action": {
+      "default_icon": "images/icon.png",
+      "default_title": "Leanote 记录, 随时随地用Leanote记录知识!"
+   },
+   "description": "Leanote 记录, Chrome插件, 随时随地用Leanote记录知识!",
+   "icons": {
+      "128": "images/icon.png",
+      "16": "images/icon.png",
+      "48": "images/icon.png"
+   },
+   "manifest_version": 2,
+   "minimum_chrome_version": "25",
+   "name": "Leanote 记录, 随时随地用Leanote记录知识!",
+   "permissions": [ "bookmarks", "tabs", "chrome://favicon/" ],
+   "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": [ "css/style.css" ],
+      "js": ["js/jquery-1.9.0.min.js", "js/main.js"],
+      "run_at": "document_start"
+    }
+   ],
+   "web_accessible_resources": [
+      "frame.html"
+   ],
+   "version": "0.1"
+}

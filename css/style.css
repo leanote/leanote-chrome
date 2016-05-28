@@ -1,0 +1,122 @@
+.leanote-ifr-ctn * {
+    margin: 0;
+    padding: 0;
+    float: none;
+    text-align: left;
+    font-size: 14px;
+}
+.leanote-ifr-ctn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 330px;
+    bottom: 15px;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 2147483647;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 18px #aaa;
+}
+.leanote-ifr-resizer {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: transparent;
+    z-index: 3;
+    cursor: nwse-resize;
+}
+.leanote-ifr-resizer-rb {
+    bottom: 0;
+    right: 0;
+}
+.leanote-ifr-resizer-lb {
+    left: 0;
+    bottom: 0;
+    cursor: nesw-resize;
+}
+.leanote-ifr-resizer-left {
+    left: 0;
+    width: 2px;
+    height: 100%;
+    cursor: ew-resize;
+    z-index: 2;
+}
+.leanote-ifr-resizer-right {
+    right: 0;
+    width: 2px;
+    height: 100%;
+    cursor: ew-resize;
+    z-index: 2;
+}
+.leanote-ifr-resizer-bottom {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    height: 3px;
+    cursor: ns-resize;
+    z-index: 2;
+}
+.leanote-ifr-header {
+    cursor: default;
+    height: 30px;
+    background: #1263B5;
+    color: #fff;
+    line-height: 30px;
+    font-size: 16px;
+    padding: 0 5px;
+    -webkit-user-select: none;
+    font-family: 'Open Sans',Helvetica,Tahoma,Arial,Hiragino Sans GB,"Microsoft YaHei","微软雅黑","Micro Hei",SimSun,"宋体",Heiti,"黑体",sans-serif;
+}
+.leanote-ifr-header span {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 8px;
+    color: #fff;
+}
+.leanote-ifr-header .leanote-ifr-min,
+.leanote-ifr-header .leanote-ifr-max
+{
+    right: 25px;
+}
+.leanote-ifr-max {
+    display: none;
+}
+.leanote-ifr-max-show {
+    height: 30px;
+    width: 200px;
+}
+.leanote-ifr-max-show .leanote-ifr-header .leanote-ifr-min,
+.leanote-ifr-max-show .leanote-ifr-body
+{
+    display: none;
+}
+
+.leanote-ifr-max-show {
+    max-height: 30px;
+}
+
+.leanote-ifr-max-show .leanote-ifr-header .leanote-ifr-max {
+    display: block;
+}
+
+.leanote-ifr-body {
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    width: 100%;
+}
+
+.leanote-ifr {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.un-select {
+    -webkit-user-select: none;
+}
+.un-select iframe {
+    pointer-events: none;
+}
