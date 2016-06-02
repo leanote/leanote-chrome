@@ -1,13 +1,35 @@
 if (self === window.parent) {
-    var host = 'https://leanote.com';
-    // host = 'http://localhost:9000';
 
-    function show() {
+    // Default server address
+    var host = 'https://leanote.com';
+
+    function getServerAddr(request){
+        if(!request.serverType){
+            return;
+        }
+        if(request.serverType === "Personal"){
+            host = "http://" + request.personalAddr;
+        }
+    }
+
+    function show(request) {
         // Avoid recursive frame insertion...
         var extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
         if (!location.ancestorOrigins.contains(extensionOrigin)) {
-            var data = encodeURIComponent(JSON.stringify({title: document.title, src: location.href}));
-            var iframeSrc = chrome.runtime.getURL('frame.html?data=' + data);
+
+            // Data to be sent to leanote, shown as title
+            var data = {title: document.title, 
+                src: location.href
+            };
+
+            // Bind listener, wait for message from leanote
+            window.addEventListener('message', function(e) {
+                console.log("received message from child iframe");
+                window.frames['leanote-ifr'].postMessage(data, host);
+            }, false);
+
+            getServerAddr(request);
+
             var tpl = '<div class="leanote-ifr-ctn">'
                 + '<div class="leanote-ifr-resizer leanote-ifr-resizer-left"></div>'
                 + '<div class="leanote-ifr-resizer leanote-ifr-resizer-right"></div>'
@@ -15,7 +37,7 @@ if (self === window.parent) {
                 + '<div class="leanote-ifr-resizer leanote-ifr-resizer-rb"></div>'
                 + '<div class="leanote-ifr-resizer leanote-ifr-resizer-bottom"></div>'
                 + '<div class="leanote-ifr-header">Leanote<span class="leanote-ifr-min">-</span><span class="leanote-ifr-max">+</span><span class="leanote-ifr-close" title="关闭">x</span></div>'
-                + '<div class="leanote-ifr-body"><iframe class="leanote-ifr" src="' + iframeSrc + '"></iframe></div>'
+                + '<div class="leanote-ifr-body"><iframe name="leanote-ifr" class="leanote-ifr" src="' + host + "/note?from=plugin" + '"></iframe></div>'
                 + '</div>';
                 $('body').append(tpl);
         }
@@ -187,11 +209,10 @@ if (self === window.parent) {
     }
 
     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) { 
-        // console.log('tttt?');
-        // console.log(request);
-        // recetxt = request.greeting;
+        console.log(request);
+
         if (!$('.leanote-ifr-ctn').length) {
-            show();
+            show(request);
         }
         if (!visible) {
             display();
@@ -200,4 +221,5 @@ if (self === window.parent) {
             hide();
         }
     }); 
+
 }
