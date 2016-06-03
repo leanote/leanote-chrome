@@ -94,6 +94,17 @@ function showSettingPanel(){
     $("#choose_confirm_btn").on('click', function() {
 	    doConfirm();
 	});
+
+    // Bind onchange event
+    $('input[type=radio][name=server_type]').change(function() {
+        if (this.value == "Official") {
+            $("#personal_addr").prop('disabled', true);
+        }
+        else if (this.value == "Personal") {
+            $("#personal_addr").prop('disabled', false);
+        }
+    });
+
 }
 
 
