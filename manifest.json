@@ -4,6 +4,7 @@
    },
    "browser_action": {
       "default_icon": "images/icon.png",
+      "default_popup": "popup.html",
       "default_title": "Leanote 记录, 随时随地用Leanote记录知识!"
    },
    "description": "Leanote 记录, Chrome插件, 随时随地用Leanote记录知识!",
@@ -15,7 +16,8 @@
    "manifest_version": 2,
    "minimum_chrome_version": "25",
    "name": "Leanote 记录, 随时随地用Leanote记录知识!",
-   "permissions": [ "bookmarks", "tabs", "chrome://favicon/" ],
+   "options_page": "options.html",
+   "permissions": [ "bookmarks", "tabs", "storage", "chrome://favicon/" ],
    "content_scripts": [
     {
       "matches": ["<all_urls>"],
