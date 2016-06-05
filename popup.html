@@ -4,6 +4,7 @@
  -->
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Welcome to Leanote</title>
     <style>
       body {
@@ -12,8 +13,10 @@
         background-color: #efefef;
         width: 200px;
       }
-      #choose_panel h2,h6{
+      h2,h5{
         text-align: center;
+        margin-top: 10px;
+
       }
       #icon_wrapper{
         margin: 0 auto;
@@ -26,10 +29,60 @@
         
       }
       #choose_panel {
-        text-overflow: ellipsis;
+        width: 100%;
         overflow: hidden;
-        
+        text-align: center;
+        padding-bottom: 20px;
       }
+      #choosen_panel{
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      button{
+        width: 80%;
+        height: 40px;
+        margin-top: 20px; 
+        background: #32BD8A; 
+        border: 0px;
+        color: #eeeeee;
+        line-height: normal;
+        white-space: nowrap;
+        vertical-align: baseline;
+        cursor: pointer;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      #change_server_btn{
+        background-color: #165ea8;
+      }
+      label{
+        padding: 0px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+      #personal_addr{
+        width: 60%;
+        margin: 0 auto;
+        vertical-align: middle;
+        display: block;
+
+      }
+      #personal_port{
+        width: 60%;
+        margin: 0 auto;
+        vertical-align: middle;
+        display: block;
+      }
+      #personal_addr_msg{
+        color: #cc0000;
+      }
+
+
     </style>
 
     <!--

@@ -1,6 +1,6 @@
 if (self === window.parent) {
 
-    // Default server address
+    // Default official server address
     var host = 'https://leanote.com';
 
     function getServerAddr(request){
@@ -8,7 +8,12 @@ if (self === window.parent) {
             return;
         }
         if(request.serverType === "Personal"){
-            host = "http://" + request.personalAddr;
+           host = (request.personalSSL ? "https://" : "http://") + request.personalAddr;
+           host += request.personalPort === "" ? "" : (":" + request.personalPort);
+        }
+        else{
+            // Reset to official server address
+            host = 'https://leanote.com';
         }
     }
 
@@ -22,13 +27,13 @@ if (self === window.parent) {
                 src: location.href
             };
 
+            getServerAddr(request);
+
             // Bind listener, wait for message from leanote
             window.addEventListener('message', function(e) {
                 console.log("received message from child iframe");
                 window.frames['leanote-ifr'].postMessage(data, host);
             }, false);
-
-            getServerAddr(request);
 
             var tpl = '<div class="leanote-ifr-ctn">'
                 + '<div class="leanote-ifr-resizer leanote-ifr-resizer-left"></div>'
@@ -210,16 +215,14 @@ if (self === window.parent) {
 
     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) { 
         console.log(request);
-
-        if (!$('.leanote-ifr-ctn').length) {
-            show(request);
+        if ($('.leanote-ifr-ctn').length) {
+            // Remove current frame
+            $('.leanote-ifr-ctn').remove();
+            
         }
-        if (!visible) {
-            display();
-        }
-        else {
-            hide();
-        }
+        // Add new one
+        show(request);
+        
     }); 
 
 }
