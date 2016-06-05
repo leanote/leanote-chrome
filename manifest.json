@@ -16,6 +16,7 @@
    "manifest_version": 2,
    "minimum_chrome_version": "25",
    "name": "Leanote 记录, 随时随地用Leanote记录知识!",
+   "options_page": "options.html",
    "permissions": [ "bookmarks", "tabs", "storage", "chrome://favicon/" ],
    "content_scripts": [
     {

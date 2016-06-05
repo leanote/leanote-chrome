@@ -8,8 +8,7 @@ if (self === window.parent) {
             return;
         }
         if(request.serverType === "Personal"){
-           host = (request.personalSSL ? "https://" : "http://") + request.personalAddr;
-           host += request.personalPort === "" ? "" : (":" + request.personalPort);
+           host = request.personalAddr;
         }
         else{
             // Reset to official server address
