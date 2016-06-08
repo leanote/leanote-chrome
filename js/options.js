@@ -44,6 +44,7 @@ function doConfirm(){
 
     // Action when user choose a server type
     var server_type;
+    var setting_changed = true;
     var selected_server_type = $("input[type='radio'][name='server_type']:checked");
     if (selected_server_type.length > 0) {
         server_type = selected_server_type.val();
@@ -56,9 +57,17 @@ function doConfirm(){
     if(server_type==="Official"){
         // Official server
         // Save setting
-        chrome.storage.local.set({'server_type': server_type}, function() {
-            alert("设置已保存");
+        chrome.storage.local.get(["server_type", "personal_addr"], function (result) {
+            if(result.server_type === server_type){
+                setting_changed = false;
+            }
+
+            chrome.storage.local.set({'server_type': server_type,
+                                    'setting_changed': setting_changed}, function() {
+                alert("设置已保存");
+            });
         });
+        
 
     }
     else{
@@ -71,11 +80,20 @@ function doConfirm(){
         // Clear error message
         $("#personal_addr_msg").text("");
         // Save setting
-        chrome.storage.local.set({'server_type': server_type, 
-                                'personal_addr': personal_addr}, 
-                                function() {
-                                    alert("设置已保存");
-                                });
+        chrome.storage.local.get(["server_type", "personal_addr"], function (result) {
+            if(result.server_type === server_type &&
+                result.personal_addr === personal_addr){
+                setting_changed = false;
+            }
+
+            chrome.storage.local.set({'server_type': server_type, 
+                                    'personal_addr': personal_addr,
+                                    'setting_changed': setting_changed}, 
+                                    function() {
+                                        alert("设置已保存");
+                                    });
+        });
+        
     }
 
 }

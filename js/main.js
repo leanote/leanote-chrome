@@ -2,19 +2,8 @@ if (self === window.parent) {
 
     // Default official server address
     var host = 'https://leanote.com';
-
-    function getServerAddr(request){
-        if(!request.serverType){
-            return;
-        }
-        if(request.serverType === "Personal"){
-           host = request.personalAddr;
-        }
-        else{
-            // Reset to official server address
-            host = 'https://leanote.com';
-        }
-    }
+    // Visible flag
+    var visible = false;
 
     function show(request) {
         // Avoid recursive frame insertion...
@@ -44,6 +33,10 @@ if (self === window.parent) {
                 + '<div class="leanote-ifr-body"><iframe name="leanote-ifr" class="leanote-ifr" src="' + host + "/note?from=plugin" + '"></iframe></div>'
                 + '</div>';
                 $('body').append(tpl);
+
+            visible = true;
+            // After display, set setting changed flag to false
+            chrome.storage.local.set({'setting_changed': false}, function() {}); 
         }
         else {
             return;
@@ -201,7 +194,6 @@ if (self === window.parent) {
         });
     }
 
-    var visible = false;
     function display() {
         $('.leanote-ifr-ctn').show();
         visible = true;
@@ -212,15 +204,43 @@ if (self === window.parent) {
         visible = false;
     }
 
+    function removeLeanote() {
+        $('.leanote-ifr-ctn').remove();
+        visible = false;
+    }
+
+    function getServerAddr(request){
+        if(!request.serverType){
+            return;
+        }
+        if(request.serverType === "Personal"){
+           host = request.personalAddr;
+        }
+        else{
+            // Reset to official server address
+            host = 'https://leanote.com';
+        }
+    }
+
     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) { 
         console.log(request);
-        if ($('.leanote-ifr-ctn').length) {
-            // Remove current frame
-            $('.leanote-ifr-ctn').remove();
-            
+        if (!$('.leanote-ifr-ctn').length) {
+            // frame not loaded
+            show(request);
         }
-        // Add new one
-        show(request);
+        else if(visible){
+            // frame loaded and showing, hide current frame
+            hide();
+        }
+        else if(request.settingChanged == false && !visible){
+            // frame loaded and is hidden, settings not changed, display current frame
+            display();
+        }
+        else if(request.settingChanged == true && !visible){
+            // frame loaded and is hidden, setting changed, refresh with new settings
+            removeLeanote();
+            show(request);
+        }
         
     }); 
 
