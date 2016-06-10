@@ -14,6 +14,7 @@
 //     });
 // });
 
+/*
 
 var showed = false;
 window.onload = function() {
@@ -27,6 +28,7 @@ window.onload = function() {
     // },5000);
 }
 
+*/
 
 chrome.browserAction.onClicked.addListener(function(activeTab) {
   // chrome.browserAction.setIcon('images/icon-gray.png');
